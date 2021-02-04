@@ -52,9 +52,9 @@ _Response (201 - Created)_
 _Response (400 - Bad Request)_
 ```
 {
-  "message": "fullname is required"
-  "message": "email is required"
-  "message": "password is required"
+  "message": "fullname tidak boleh kosong"
+  "message": "email tidak boleh kosong"
+  "message": "password tidak boleh kosong"
 }
 ```
 
@@ -92,6 +92,12 @@ _Response (200 - Ok)_
 ```
 
 _Response (401 - Unautorized)_
+```
+{
+  "message": "Invalid Email or Password"
+}
+```
+_Response (404 - Not Found)_
 ```
 {
   "message": "Invalid Email or Password"
