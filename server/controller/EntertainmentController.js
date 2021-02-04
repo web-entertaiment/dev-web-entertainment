@@ -1,6 +1,5 @@
 const axios = require('axios')
 
-
 class EntertainmentController {
     static getAnime(req, res, next){
         let query = req.query.search
