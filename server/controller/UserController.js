@@ -21,13 +21,13 @@ class UserController {
         let password = req.body.password
         User.findOne({where: {email}})
         .then(user => {
+            if(!user || user === null ) throw {name: 'NotFoundError', msg: 'Email / Password is Invalid'}
             let comparedPass = comparePass(password, user.password)
-            if(!user) throw {msg: 'Email / Password is Invalid'}
             if(comparedPass){
                 let token = generateToken({id: user.id, email: user.email})
-                res.status(200).json({id: user.id, email: user.email, token})
+                res.status(200).json({access_token: token})
             }else{
-                throw {msg: 'Email / Password is Invalid'}
+                throw {name: 'JsonWebTokenError', msg: 'Email / Password is Invalid'}
             }
         })
         .catch(err => {
