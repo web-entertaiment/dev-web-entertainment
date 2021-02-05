@@ -20,21 +20,34 @@ class EntertainmentController {
         res.status(200).json(comic)
       })
       .catch( err => {
-        console.log(err);
         next(err)
       })
   }
 
-    static getAnime(req, res, next){
-        let query = req.query.search
-        axios.get(`https://api.jikan.moe/v3/search/anime/?q=${query}&page=1`)
-        .then(response => {
-            res.status(200).json(response.data)
-        })
-        .catch(err => {
-            next(err)
-        })
-    }
+  static getAnime(req, res, next){
+    let query = req.query.search
+    axios.get(`https://api.jikan.moe/v3/search/anime/?q=${query}&page=1`)
+    .then(response => {
+      res.status(200).json(response.data)
+    })
+    .catch(err => {
+      next(err)
+    })
+  }
+
+  static getMovie(req, res, next) {
+    
+    const api_key_movie = process.env.APIKEY_MOVIE
+    axios.get(`https://api.themoviedb.org/3/trending/movie/day?api_key=${api_key_movie}`)
+    .then(response => {
+      res.status(200).json(response.results)
+      //akses gambar tambah https://image.tmdb.org/t/p/w500/{link gambar}
+    })
+    .catch(err => {
+      next(err)
+    })
+
+  }
 
 
 }
