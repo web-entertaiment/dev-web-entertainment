@@ -18,16 +18,19 @@
             </button>
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="#">Anime</a>
+                    <a class="nav-link" aria-current="page" href="#" id="showAnimes">Anime</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Movies</a>
+                    <a class="nav-link" href="#" id="showMovies">Movies</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="showComics">Comics</a>
                 </li>
             </ul>
             <div>
-                <button type="button" id="logout-btn" class="btn btn-primary">Logout</button>
-                <button type="button" id="login-btn" class="btn btn-primary">Login</button>
-                <button type="button" id="login-btn" class="btn btn-primary">Register</button>
+                <button type="button" id="logout-nav" class="btn btn-primary">Logout</button>
+                <button type="button" id="login-nav" class="btn btn-primary">Login</button>
+                <button type="button" id="regist-btn" class="btn btn-primary">Register</button>
             </div>
         </div>
     </nav>
@@ -73,7 +76,7 @@
                         <label for="regist-password-input" class="form-label">Password</label>
                         <input type="password" class="form-control" id="regist-password-input">
                     </div><br>
-                    <button type="submit" class="btn btn-primary">Register</button>
+                    <button type="submit" class="btn btn-primary" id="register-btn">Register</button>
                 </form>
             </div>
         </div>

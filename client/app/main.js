@@ -2,14 +2,47 @@ const base_url = "http://localhost:3000/"
 
 $(document).ready(() => {
   auth()
+  $('#logout-nav').click((e) => {
+    e.preventDefault()
+    logout()
   })
+  $('#register-btn').click((e) => {
+    e.preventDefault()
+    register()
+  })
+
+  $('#regist-btn').on('click' ,(e) => {
+    e.preventDefault()
+    $("#register").show()
+    $("#login").hide()
+  })
+
+  $('#showComics').click((e) => {
+    e.preventDefault()
+    showDataComics()
+    $('#comic-list').show()
+  })
+
+  $('#showAnimes').click((e) => {
+    e.preventDefault()
+    showAnimes()
+    $('#anime-list').show()
+
+  })
+
+  $('#showMovies').click((e) => {
+    e.preventDefault()
+    showMovies()
+    $('#movie-list').show()
+  })
+})
 
 const auth = () => {
   if(!localStorage.access_token) {
     $("#login").show()
     $("#register").hide()
-    $("#login-btn").hide()
-    $("#logout-btn").hide()
+    $("#login-nav").hide()
+    $("#logout-nav").hide()
     $("#regist-btn").show()
     $("#movie-list").hide()
     $("#comic-list").hide()
@@ -18,8 +51,8 @@ const auth = () => {
   } else {
     $("#login").hide()
     $("#register").hide()
-    $("#login-btn").hide()
-    $("#logout-btn").show()
+    $("#login-nav").hide()
+    $("#logout-nav").show()
     $("#regist-btn").hide()
     $("#movie-list").hide()
     $("#comic-list").hide()
@@ -30,30 +63,31 @@ const auth = () => {
 }
 
 function onSignIn(googleUser) {
-  var id_token = googleUser.getAuthResponse().id_token
+    var id_token = googleUser.getAuthResponse().id_token;
+    $.ajax({
+      method: `POST`,
+      url: `${base_url}user/googlelogin`,
+      data: { id_token }
+    })
+    .done( response => {
+      localStorage.setItem(`access_token`,response.access_token)
+      auth()
+    })
+    .fail(err => {console.log(err);
+    })
+    .always(() => {
+      $(`#login-email`).val('')
+      $(`#login-password`).val('')
+    })
+  }
 
-  $.ajax({
-      url: base_url + "googlelogin",
-      method: "POST",
-      data: {
-        googleToken : id_token
-      }
-        .done(res => {
-            localStorage.setItem("access_token", res.access_token);
-            auth()
-        })
-        .fail(xhr, text => {
-          console.log(xhr, text);
-        })
-  })
-}
 
 $(`#btn-login`).click((event) => {
   event.preventDefault()
   const email = $("#login-email-input").val()
   const password = $("#login-password-input").val()
   $.ajax({
-      url: base_url + "/user/login",
+      url: base_url + "user/login",
       method: "POST",
       data: { email, password }
   })
@@ -61,8 +95,8 @@ $(`#btn-login`).click((event) => {
           localStorage.setItem("access_token", res.accessToken)
           auth()
       })
-      .fail(xhr, text => {
-          console.log(xhr, text);
+      .fail((xhr,text) => {
+          console.log(text);
       })
       .always(_ => {
           $("#login-email-input").trigger("reset")
@@ -75,14 +109,14 @@ const register = () => {
   const email = $("#regist-email-input").val()
   const password = $("#regist-password-input").val()
   $.ajax({
-      url: base_url + "regist",
+      url: base_url + "user/register",
       method: "POST",
       data: { fullName, email, password }
   })
       .done(res => {
         auth()
       })
-      .fail(xhr, text => {
+      .fail((xhr, text) => {
           console.log(xhr, text);
       })
       .always(_ => {
@@ -130,7 +164,7 @@ const getFavorite = () => {
         `) // <<<<<<<<<<
       })
     })
-    .fail(xhr, text => {
+    .fail((xhr, text) => {
       console.log(xhr, text);
     })
 }
@@ -154,7 +188,7 @@ const addFavorite = () => {
     .done(favorites => {
       getFavorite()
     })
-    .fail(xhr, text => {
+    .fail((xhr, text) => {
       console.log(xhr, text);
     })
 }
@@ -170,14 +204,14 @@ const delFavorite = () => {
     .done(favorite => {
 
     })
-    .fail(xhr, text => {
+    .fail((xhr, text) => {
       console.log(xhr, text);
     })
 }
 
-const showComics = () => {
+const showDataComics = () => {
   $.ajax({
-    url: base_url + "comics",
+    url: base_url + "entertainment/comics",
     method: "GET",
     headers: {
       access_token: localStorage.getItem("access_token")
@@ -204,14 +238,14 @@ const showComics = () => {
         `)
       }
     })
-    .fail(xhr, text => {
+    .fail((xhr, text) => {
       console.log(xhr, text);
     })
 }
 
 const showAnimes = () => {
   $.ajax({
-    url: base_url + "animes",
+    url: base_url + "entertainment/animes",
     method: "GET",
     headers: {
       access_token: localStorage.getItem("access_token")
@@ -238,14 +272,14 @@ const showAnimes = () => {
         `)
       }
     })
-    .fail(xhr, text => {
+    .fail((xhr, text) => {
       console.log(xhr, text);
     })
 }
 
 const showMovies = () => {
   $.ajax({
-    url: base_url + "movies",
+    url: base_url + "entertainment/movies",
     method: "GET",
     headers: {
       access_token: localStorage.getItem("access_token")
@@ -272,7 +306,7 @@ const showMovies = () => {
         `)
       }
     })
-    .fail(xhr, text => {
+    .fail((xhr, text) => {
       console.log(xhr, text);
     })
-}
+  }
