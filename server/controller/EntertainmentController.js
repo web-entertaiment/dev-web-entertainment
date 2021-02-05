@@ -57,7 +57,14 @@ class EntertainmentController {
     const api_key_movie = process.env.APIKEY_MOVIE
     axios.get(`https://api.themoviedb.org/3/trending/movie/day?api_key=${api_key_movie}`)
     .then(response => {
-      res.status(200).json(response.results)
+      let movie = response.data.results.map(el => { 
+        return {
+          title: el.title,
+          description: el.overview,
+          img: `https://image.tmdb.org/t/p/w500${el.poster_path}`
+        }
+      })
+      res.status(200).json(movie)
       //akses gambar tambah https://image.tmdb.org/t/p/w500/{link gambar}
     })
     .catch(err => {
