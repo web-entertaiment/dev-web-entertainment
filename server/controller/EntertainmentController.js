@@ -20,6 +20,7 @@ class EntertainmentController {
         res.status(200).json(comic)
       })
       .catch( err => {
+        console.log(err);
         next(err)
       })
   }

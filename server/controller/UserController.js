@@ -34,6 +34,48 @@ class UserController {
             next(err)
         })
     }
+
+    static googleLogin(req, res, next) {
+        const client = new OAuth2Client(process.env.CLIENT_ID) 
+        let fullName = ""
+        let email = ""
+        client.verifyIdToken({
+            idToken: req.body.googleToken,
+            audience: process.env.CLIENT_ID
+        })
+            .then(ticket => {
+                const payload = ticket.getPayload()
+                fullName = payload.name
+                email = payload.email
+
+                return User.findOne({where: {email}}) 
+            })
+            .then(user => {
+                if(user) {
+                    const access_token = generateToken({
+                        id: registeredUser.id,
+                        email: registeredUser.email
+                    })
+                    res.status(200).json({access_token})
+                } else {
+                    return User.create({
+                        fullName,
+                        email,
+                        password: "littlefoxes"
+                    })
+                }
+            })
+            .then(registeredUser => {
+                const access_token = generateToken({
+                    id: registeredUser.id,
+                    email: registeredUser.email
+                })
+                res.status(201).json({access_token})
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
 }
 
 module.exports = UserController
