@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Favourites', {
+  up: (queryInterface, Sequelize) => {
+    return queryInterface.createTable('Favourites', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -9,12 +9,21 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       UserId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+      references: {
+        model: 'Users',
+        key: 'id'
       },
-      status: {
-        type: Sequelize.BOOLEAN
+      onUpdate: 'cascade',
+      onDelete: 'cascade'
       },
-      category: {
+      title: {
+        type: Sequelize.STRING
+      },
+      description: {
+        type: Sequelize.STRING
+      },
+      imgUrl: {
         type: Sequelize.STRING
       },
       createdAt: {
@@ -27,7 +36,7 @@ module.exports = {
       }
     });
   },
-  down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Favourites');
+  down: (queryInterface, Sequelize) => {
+    return queryInterface.dropTable('Favourites');
   }
 };

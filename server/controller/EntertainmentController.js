@@ -1,6 +1,7 @@
 const axios = require('axios')
 
 class EntertainmentController {
+
   static getComics (req, res, next){
     let ts = process.env.TS
     let apikey_marvel = process.env.APIKEY_MARVEL
@@ -28,7 +29,7 @@ class EntertainmentController {
         let query = req.query.search
         axios.get(`https://api.jikan.moe/v3/search/anime/?q=${query}&page=1`)
         .then(response => {
-            res.status(200).json(response.data)
+            res.status(200).json(response.data.results)
         })
         .catch(err => {
             next(err)
