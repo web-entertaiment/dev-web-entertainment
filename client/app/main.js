@@ -33,27 +33,35 @@ const auth = () => {
       getTodoList()
   }
 }
-
+// function onSignIn(googleUser) {
+  // var profile = googleUser.getBasicProfile();
+  // console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+  // console.log('Name: ' + profile.getName());
+  // console.log('Image URL: ' + profile.getImageUrl());
+  // console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+// }
 const onSignIn = (googleUser) => {
     // var profile = googleUser.getBasicProfile();
     // console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
     // console.log('Name: ' + profile.getName());
     // console.log('Image URL: ' + profile.getImageUrl());
     // console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-    var id_token = googleUser.getAuthResponse().id_token;
+    // let googleToken = googleUser.getAuthResponse().id_token;
+    var id_token = googleUser.getAuthResponse().id_token
+
     $.ajax({
         url: base_url + "",
         method: "POST",
         data: {
-            googleToken: id_token
+            googleToken : id_token
         }
-          .done(res => {
-              localStorage.setItem("access_token", res.access_token);
-              checkLocalStorage()
-          })
-          .fail(err => {
-              console.log(err);
-          })
+            .done(res => {
+                localStorage.setItem("access_token", res.access_token);
+                checkLocalStorage()
+            })
+            .fail(err => {
+                console.log(err);
+            })
     })
 }
 
@@ -116,18 +124,3 @@ const delFavorite = () => {
       console.log(xhr, text);
     })
 }
-
-// CLIENT ID 282382347754-qkp163cpqic8bhjoiu8daeggp6k8477a.apps.googleusercontent.com
-// CLIENT SECRET OVb4cxtQtKVAfjZSuiB4pSrO
-
-// googleSignIn AT CONTROLLER
-
-/**
- *  1. INSTALL npm install google-auth-library --save
- *  2. Create routing
- *  3. Create controller
- */
-
-
-
-// ROUTER
