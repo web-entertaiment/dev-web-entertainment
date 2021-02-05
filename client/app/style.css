@@ -1,0 +1,52 @@
+.container {
+    width: 1100px;
+    margin: 0 auto;
+}
+
+.login-sec {
+    height: 100vh;
+    background-image: url('../ryan-yao-hhBvtVxDV_I-unsplash.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+section,
+nav,
+footer {
+    padding: 10px 15px;
+}
+
+.container {
+    width: 1100px;
+    margin: 0 auto;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.form-cont {
+    width: 500px;
+    padding: 20px 30px;
+    margin: 20px auto;
+    border: 1px solid rgb(223, 221, 221);
+    border-radius: 15px;
+}
+
+.login-cont {
+    width: 400px;
+    margin: 30px 0;
+    padding: 40px;
+    background-color: rgba(237, 237, 237, 0.68);
+    border-radius: 20px;
+}
+
+.list-cont {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+    row-gap: 30px;
+    column-gap: 30px;
+}
