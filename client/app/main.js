@@ -21,12 +21,16 @@ $(document).ready(() => {
     e.preventDefault()
     showDataComics()
     $('#comic-list').show()
+    $('#anime-list').hide()
+    $('#movie-list').hide()
   })
 
   $('#showAnimes').click((e) => {
     e.preventDefault()
     showAnimes()
     $('#anime-list').show()
+    $('#comic-list').hide()
+    $('#movie-list').hide()
 
   })
 
@@ -34,6 +38,8 @@ $(document).ready(() => {
     e.preventDefault()
     showMovies()
     $('#movie-list').show()
+    $('#anime-list').hide()
+    $('#comic-list').hide()
   })
 })
 
@@ -132,6 +138,8 @@ const logout = () => {
         console.log('User signed out.');
     });
     auth()
+    $("#login-email-input").val('')
+    $("#login-password-input").val('')
 }
 
 const getFavorite = () => {
@@ -224,7 +232,7 @@ const showDataComics = () => {
           <div class="card mb-3" style="max-width: 440px;">
             <div class="row g-0">
               <div class="col-md-4">
-                <img src="${comics[i].img}" alt="">
+                <img src="${comics[i].img}" alt="" class="img-fluid">
               </div>
               <div class="col-md-8">
                 <div class="card-body">
@@ -258,7 +266,7 @@ const showAnimes = () => {
           <div class="card mb-3" style="max-width: 440px;">
             <div class="row g-0">
               <div class="col-md-4">
-                <img src="${animes[i].img}" alt="">
+                <img src="${animes[i].img}" alt="" class="img-fluid">
               </div>
               <div class="col-md-8">
                 <div class="card-body">
@@ -292,7 +300,7 @@ const showMovies = () => {
           <div class="card mb-3" style="max-width: 440px;">
             <div class="row g-0">
               <div class="col-md-4">
-                <img src="${movies[i].img}" alt="">
+                <img src="${movies[i].img}" alt="" class="img-fluid">
               </div>
               <div class="col-md-8">
                 <div class="card-body">
