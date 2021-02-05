@@ -17,23 +17,40 @@ class EntertainmentController {
             img: el.images[0]
           }
         })
-        res.status(200).json(comic)
+        let data = comic.filter(el => {if (el.img && el.img !== null ) return el})
+        let finalData = data.map(el => { 
+          return {
+            title: el.title,
+            description: el.description,
+            url: el.url,
+            img: `${el.img.path}/detail.jpg`
+          }
+        })
+        res.status(200).json(finalData)
       })
       .catch( err => {
         next(err)
       })
   }
 
-  static getAnime(req, res, next){
-    let query = req.query.search
-    axios.get(`https://api.jikan.moe/v3/search/anime/?q=${query}&page=1`)
-    .then(response => {
-      res.status(200).json(response.data)
-    })
-    .catch(err => {
-      next(err)
-    })
-  }
+    static getAnime(req, res, next){
+        let query = req.query.search
+        axios.get(`https://api.jikan.moe/v3/search/anime/?q=${query}&page=1`)
+        .then(response => {
+          let anime = response.data.results.map(el => { 
+            return {
+              title: el.title,
+              description: el.synopsis,
+              url: el.url,
+              img: el.image_url
+            }
+          })
+            res.status(200).json(anime)
+        })
+        .catch(err => {
+            next(err)
+        })
+    }
 
   static getMovie(req, res, next) {
     
